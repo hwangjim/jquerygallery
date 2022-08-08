@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>광고, 갤러리</title>
+    <!-- Practice에-->
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        /* 위 스타일 태그와 겹쳐서 아래 것이 적용됨 */
+        #content{
+            width: 200px;
+            margin: 20px;
+        }
+        #content .page{
+            text-align: right;
+            margin: 5px;
+        }
+        #content .page button{
+            background-color: lightblue;
+            color: white;
+            width : 20px;
+            height: 20px;
+            overflow: hidden;
+            border: none;
+            /* 글자 크기 */
+            line-height: 1.5;
+        }
+        #content .pic{
+            width: 200px;
+            height: 200px;
+            border: 3px solid blue;
+            overflow: hidden;
+        }
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <script>
+        // 시작
+        $(document).ready(function(){
+            // 전체 사진 개수 
+            // .pic 내 div의 개수
+            var total=$(".pic > div").length;
+            // 현재 페이지 넘버
+            var curr = 1;
+            // 첫번째 span에는 curr 정보 넣어줌
+            $(".pageInfo > span:first").text(curr);
+            // 마지막 span에는 total정보 넣어줌
+            $(".pageInfo > span:last").text(total);
+            // nextBtn버튼을 눌렀을때 일어나는 일
+            $(".nextBtn").click(function(){
+                // 현재 값이 ++
+                curr++;
+                // 현재 값이 total보다 많아진다면 1로 돌아오기
+                if(curr>total){
+                    curr=1;
+                }
+                // 이후 그 값을 새로 넣어줌
+                $(".pageInfo > span:first").text(curr);
+                // > : 바로 직속하위라는 뜻 
+                // 첫번째 있는애가 마지막 사진 뒤에 들어간다는 의미 
+                // 그러면 1234 2341 3412 4123 1234 순으로 반복 
+                $(".pic div:first").insertAfter(".pic div:last")
+            });
+            // prevBtn을 눌렀을때 일어나는 일
+            $(".prevBtn").click(function(){
+                // 현재 값이 -- 
+                curr--;
+                // 현재 값이 1보다 작아진다면 다시 total로 복귀
+                if(curr<1){
+                    curr=total;
+                }
+                $(".pageInfo > span:first").text(curr);
+                $(".pic div:last").insertAfter(".pic div:first")
+            });
+        });
+    </script>
+
+    <div id="content">
+        <div class="page">
+            <span class="pageInfo">
+                <!--페이지 넘버-->
+                <span></span> / <span></span>
+            </span>
+            <!--화살표가 태그처리되어버려 태그문자인 &lt, gt를 사용해 화살표 모양 표기 -->
+            <button class="prevBtn">&lt; 이전</button>
+            <button class="nextBtn">&gt; 다음</button>
+        </div>
+        <div class="pic">
+            <div><img src="./images/dice1.png" alt="주사위1"></div>
+            <div><img src="./images/dice2.png" alt="주사위2"></div>
+            <div><img src="./images/dice3.png" alt="주사위3"></div>
+        </div>
+    </div>
+
+</body>
+</html>
